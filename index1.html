@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>كاشف الغاز</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      direction: rtl;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .logo-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .logo-section img {
+      height: 50px;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .section {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .pdf-viewer {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .pdf-container {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .pdf-controls {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .pdf-controls button {
+      padding: 8px 20px;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .pdf-controls button:hover {
+      background-color: #e0e0e0;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #c9302c;
+    }
+
+    .submit-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .test-data {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .logo-section {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+      
+      .pdf-viewer {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo-section">
+      <img src="logo-karf.png" alt="Karf & Scoot" />
+      <span>بالتعاون مع</span>
+      <span class="title">أصيل</span>
+    </div>
+
+    <div class="section">
+      <div class="section-title">فيديو توضيحي</div>
+      <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius: 10px;">
+        <iframe 
+          src="https://www.youtube.com/embed/VGdYQpQhc58" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen 
+          style="position:absolute; top:0; left:0; width:100%; height:100%;">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">شهادة الجودة</div>
+      <div class="pdf-viewer">
+        <iframe 
+          id="pdfFrame"
+          class="pdf-container"
+          src="https://drive.google.com/file/d/1BrrfbfajuxYKS-SvT5zu4KS8ja6YYBCN/preview"
+          width="100%" 
+          height="100%"
+          style="border: none;">
+          المتصفح لا يدعم عرض PDF. 
+          <a href="https://drive.google.com/file/d/1BrrfbfajuxYKS-SvT5zu4KS8ja6YYBCN/view" target="_blank">اضغط لتحميل الملف</a>.
+        </iframe>
+      </div>
+      <div class="pdf-controls">
+        <button onclick="downloadPDF()">تحميل</button>
+      </div>
+    </div>
+
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="الإسم" required />
+      <input type="tel" id="phone" placeholder="الهاتف" required />
+      <button type="submit" class="submit-btn">إرسال</button>
+      
+      <div class="test-data">
+        <strong>Test Data:</strong><br>
+        Name: أحمد محمد (Ahmad Mohammed)<br>
+        Phone: 0550123456 (Saudi number)
+      </div>
+    </form>
+  </div>
+
+  <!-- Google Apps Script Library -->
+  <script src="https://apis.google.com/js/api.js"></script>
+  
+  <script>
+    // PDF Download Function
+    function downloadPDF() {
+      window.open('https://drive.google.com/uc?export=download&id=1BrrfbfajuxYKS-SvT5zu4KS8ja6YYBCN', '_blank');
+    }
+
+    // Load the Google Apps Script Library
+    function loadGASLibrary() {
+      gapi.load('client', initClient);
+    }
+
+    function initClient() {
+      gapi.client.load('https://script.googleapis.com/$discovery/rest?version=v1', () => {
+        gapi.client.init({
+          'apiKey': 'YOUR_API_KEY', // Optional if you don't need API key
+          'discoveryDocs': ['https://script.googleapis.com/$discovery/rest?version=v1'],
+          'clientId': 'YOUR_CLIENT_ID', // Only needed for OAuth
+          'scope': 'https://www.googleapis.com/auth/script.projects'
+        }).then(() => {
+          console.log('GAS library loaded');
+        });
+      });
+    }
+
+    // Form Submission Handler
+    const form = document.getElementById('contactForm');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzBHSDuWI9ErcVOo1qlJEcpOEOa8CY73x294oSoZMZ8L4wwCLp9mkk0u_pa3IQoMaag/exec';
+
+    // Auto-fill test data
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('name').value = 'أحمد محمد';
+      document.getElementById('phone').value = '0550123456';
+      loadGASLibrary(); // Initialize the GAS library
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جاري الإرسال...';
+
+      try {
+        const formData = {
+          name: document.getElementById('name').value.trim(),
+          phone: document.getElementById('phone').value.trim()
+        };
+
+        // Validate inputs
+        if (!formData.name || !formData.phone) {
+          throw new Error('الرجاء إدخال جميع البيانات المطلوبة');
+        }
+
+        // Using both fetch and GAS library as fallback
+        const response = await fetch(scriptURL + '?callback=handleResponse', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        
+        if (!response.ok) {
+          throw new Error('خطأ في الشبكة');
+        }
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert(result.message || "تم استلام بياناتك بنجاح، شكراً لك!");
+          form.reset();
+        } else {
+          throw new Error(result.message || 'خطأ غير معروف من الخادم');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert(error.message || "تم إرسال البيانات بنجاح! (قد لا تظهر رسالة التأكيد بسبب إعدادات الأمان)");
+        
+        // Fallback using Google Apps Script API
+        try {
+          await gapi.client.script.scripts.run({
+            'scriptId': 'AKfycbypJRyAzTpmmg6pQqJkeNwoCgdBTbQ-BcedDZG6FkFJgUCKuLpabjUIR11TiKeCd7PB',
+            'resource': {
+              'function': 'doPost',
+              'parameters': [document.getElementById('name').value, document.getElementById('phone').value],
+              'devMode': true
+            }
+          });
+          console.log('Fallback submission succeeded');
+        } catch (gasError) {
+          console.error('GAS API error:', gasError);
+        }
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    });
+
+    // Handle JSONP response
+    function handleResponse(response) {
+      console.log('JSONP response:', response);
+    }
+  </script>
+
+</body>
+</html>
