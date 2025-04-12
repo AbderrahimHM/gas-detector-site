@@ -1,88 +1,50 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>كاشف الغاز</title>
+  <title>Gas Detector Form</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      direction: rtl;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-    button {
-      background: #d9534f;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: #ccc;
-    }
+    body { font-family: Arial; max-width: 500px; margin: 0 auto; padding: 20px; }
+    input, button { width: 100%; padding: 10px; margin: 5px 0; }
   </style>
 </head>
 <body>
-
+  <h2>Contact Form</h2>
   <form id="contactForm">
-    <input type="text" id="name" placeholder="الإسم" required>
-    <input type="tel" id="phone" placeholder="الهاتف" required>
-    <button type="submit" id="submitBtn">إرسال</button>
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="tel" id="phone" placeholder="Phone" required>
+    <button type="submit">Submit</button>
   </form>
 
   <script>
     const form = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbweo6SuBahK4pYVLK47qQve877Z0ADjA0hEk4k_fe-7OVtBcatksI6nSjeCE4B1CKLi/exec';
+    // REPLACE THIS WITH YOUR ACTUAL SCRIPT URL
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbweo6SuBahK4pYVLK47qQve877Z0ADjA0hEk4k_fe-7OVtBcatksI6nSjeCE4B1CKLi/exec';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Disable button during submission
+      const submitBtn = form.querySelector('button');
       submitBtn.disabled = true;
-      submitBtn.textContent = 'جاري الإرسال...';
+      submitBtn.textContent = 'Sending...';
 
       try {
-        // Prepare form data
-        const formData = new FormData();
-        formData.append('name', document.getElementById('name').value);
-        formData.append('phone', document.getElementById('phone').value);
-
-        // Send to Google Apps Script
-        const response = await fetch(scriptURL, {
+        const response = await fetch(SCRIPT_URL, {
           method: 'POST',
-          body: formData
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value
+          })
         });
 
-        if (response.ok) {
-          alert('تم إرسال البيانات بنجاح!');
-          form.reset();
-        } else {
-          throw new Error('فشل في الإرسال');
-        }
+        const result = await response.json();
+        alert(result.success ? "Success! " + result.message : "Error: " + result.error);
+        form.reset();
       } catch (error) {
+        alert("Network error. Please try again.");
         console.error('Error:', error);
-        alert('حدث خطأ أثناء الإرسال: ' + error.message);
       } finally {
-        // Re-enable button
         submitBtn.disabled = false;
-        submitBtn.textContent = 'إرسال';
+        submitBtn.textContent = 'Submit';
       }
     });
   </script>
